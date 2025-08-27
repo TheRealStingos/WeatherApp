@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <H1>Stingos' Weather App</H1>
     <div>
-        <form id="location"></form>
+        <form id="user-input">
+            <input type="text" id="location" placeholder="Enter a city">
+            <input type="radio" name="scale" id="fahr"> F
+            <input type="radio" name="scale" id="cel"> C
+            <button id="submit">Submit</button>
+        </form>
     </div>
     <div id="weather">
         <div id="forecast"></div>
