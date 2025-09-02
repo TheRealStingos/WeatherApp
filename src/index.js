@@ -5,7 +5,8 @@ const metric = "?unitGroup=metric";
 const forecast = document.getElementById("forecast");
 const location = document.getElementById("location");
 const submit = document.getElementById("submit");
-const tempScale = document.getElementById("fahr")
+const tempScale = document.getElementById("fahr");
+const forecastSelect = document.getElementById("forecast-select");
 
 submit.addEventListener("click", (event) => {
   event.preventDefault(); // Prevent form submission to avoid page reload
@@ -15,6 +16,8 @@ submit.addEventListener("click", (event) => {
     forecast.innerText = "Please enter a city";
     return;
   }
+
+  const forecastLength = forecastSelect.value;
 
 if (tempScale.checked) {
     submit.disabled = true; // Disable button during request to prevent multiple clicks
@@ -26,9 +29,17 @@ if (tempScale.checked) {
         return response.json();
         })
         .then(response => {
-        forecast.innerText = response.currentConditions.temp
-            ? `Current temperature in ${response.resolvedAddress}: ${response.currentConditions.temp}°F`
-            : "No temperature data available";
+        const forecastArray = response.days.slice(0, forecastLength)
+        if (response && forecastArray.length > 0) {
+            let forecastText = "";
+            forecastArray.forEach(day => {
+                forecastText += `${day.temp}°F 
+                `;
+         });
+            forecast.innerText = forecastText;
+        } else {
+            forecast.innerText = "No temperature data available";
+        }
         console.log(response);
         })
         .catch(error => {
@@ -50,9 +61,17 @@ if (tempScale.checked) {
       return response.json();
     })
     .then(response => {
-      forecast.innerText = response.currentConditions.temp
-        ? `Current temperature in ${response.resolvedAddress}: ${response.currentConditions.temp}°C`
-        : "No temperature data available";
+    const forecastArray = response.days.slice(0, forecastLength)
+        if (response && forecastArray.length > 0) {
+            let forecastText = "";
+            forecastArray.forEach(day => {
+                forecastText += `${day.temp}°C 
+                `;
+         });
+            forecast.innerText = forecastText;
+        } else {
+            forecast.innerText = "No temperature data available";
+        }
       console.log(response);
     })
     .catch(error => {

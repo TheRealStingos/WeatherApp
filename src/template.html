@@ -14,6 +14,15 @@
             <input type="radio" name="scale" id="fahr"> F
             <input type="radio" name="scale" id="cel"> C
             <button id="submit">Submit</button>
+            <br>
+            <label for="forecast-length">Forecast Length:</label>
+            <select name="forecast-length" id="forecast-select" required>
+                <option value=3>3 Day</option>
+                <option value=5>5 Day</option>
+                <option value=7>7 Day</option>
+                <option value=10>10 Day</option>
+                <option value=15>15 Day</option>
+            </select>
         </form>
     </div>
     <div id="weather">
