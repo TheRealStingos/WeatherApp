@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>Stingos' Weather App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <H1>Stingos' Weather App</H1>
-    <div>
-        <form id="user-input">
-            <input type="text" id="location" placeholder="Enter a city">
-            <input type="radio" name="scale" id="fahr"> F
-            <input type="radio" name="scale" id="cel"> C
-            <button id="submit">Submit</button>
-            <br>
-            <label for="forecast-length">Forecast Length:</label>
-            <select name="forecast-length" id="forecast-select" required>
-                <option value=3>3 Day</option>
-                <option value=5>5 Day</option>
-                <option value=7>7 Day</option>
-                <option value=10>10 Day</option>
-                <option value=15>15 Day</option>
-            </select>
-        </form>
+    <div class="container">
+        <h1>Stingos' Weather App</h1>
+        
+        <div class="search-section">
+            <form id="user-input">
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="text" id="location" placeholder="Enter a city or location">
+                    </div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="scale" id="fahr" checked>
+                            <span>°F</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="scale" id="cel">
+                            <span>°C</span>
+                        </label>
+                    </div>
+                    
+                    <div class="select-group">
+                        <label for="forecast-select">Forecast:</label>
+                        <select name="forecast-length" id="forecast-select" required>
+                            <option value="3">3 Days</option>
+                            <option value="5" selected>5 Days</option>
+                            <option value="7">7 Days</option>
+                            <option value="10">10 Days</option>
+                            <option value="15">15 Days</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" id="submit">Get Weather</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="weather">
+            <div id="forecast" class="forecast-container"></div>
+        </div>
     </div>
-    <div id="weather">
-        <div id="forecast"></div>
-        <div id="additional"></div>
-    </div>
-    <script type="module" src="index.js"></script> 
+    
+    <script type="module" src="index.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ export function fetchWeatherForecast(locationValue, isImperial, forecastLength, 
   const unitGroup = isImperial ? imperial : metric;
   
   submit.disabled = true; // Disable button during request to prevent multiple clicks
+  forecast.innerHTML = '<div class="loading">Loading weather data...</div>';
   
   fetch(`${baseUrl}${encodeURIComponent(locationValue)}${unitGroup}${key}`, { mode: 'cors' })
     .then(response => {
@@ -18,20 +19,32 @@ export function fetchWeatherForecast(locationValue, isImperial, forecastLength, 
     .then(response => {
       const forecastArray = response.days.slice(0, forecastLength);
       if (response && forecastArray.length > 0) {
-        let forecastText = "";
+        let forecastHTML = "";
         forecastArray.forEach(day => {
           const unit = isImperial ? "°F" : "°C";
-          forecastText += `${day.temp}${unit}\n`;
+          const date = new Date(day.datetime);
+          const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+          const shortDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          
+          forecastHTML += `
+            <div class="forecast-card">
+              <div class="forecast-date">${shortDate}</div>
+              <div class="forecast-day">${dayOfWeek}</div>
+              <div class="forecast-temp">${Math.round(day.temp)}${unit}</div>
+              <div class="forecast-conditions">${day.conditions}</div>
+              <div class="forecast-humidity">${day.humidity}% humidity</div>
+            </div>
+          `;
         });
-        forecast.innerText = forecastText;
+        forecast.innerHTML = forecastHTML;
       } else {
-        forecast.innerText = "No temperature data available";
+        forecast.innerHTML = '<div class="error-message">No temperature data available</div>';
       }
       console.log(response);
     })
     .catch(error => {
       console.error("Fetch error:", error);
-      forecast.innerText = `Error fetching weather data: ${error.message}`;
+      forecast.innerHTML = `<div class="error-message">Error fetching weather data: ${error.message}</div>`;
     })
     .finally(() => {
       submit.disabled = false; // Re-enable button after request completes

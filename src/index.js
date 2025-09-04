@@ -1,3 +1,4 @@
+import './styles.css';
 import { fetchWeatherForecast } from './modules/forecast.js';
 
 const forecast = document.getElementById("forecast");

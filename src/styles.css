@@ -1,42 +1,281 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  max-width: 600px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  text-align: center;
 }
 
 h1 {
-  color: #333;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-form {
+.search-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.form-row {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  justify-content: center; /* Center the form elements */
 }
 
-input[type="text"] {
-  padding: 8px;
-  font-size: 16px;
-  flex-grow: 1;
+.input-group {
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px; /* Prevent input from getting too wide */
 }
 
-button {
-  padding: 8px 16px;
+#location {
+  width: 100%;
+  padding: 12px 16px;
   font-size: 16px;
-  background-color: #007bff;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+#location:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-option:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+input[type="radio"] {
+  accent-color: #667eea;
+}
+
+.select-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#forecast-select {
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+#forecast-select:focus {
+  border-color: #667eea;
+}
+
+#submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-button:disabled {
-  background-color: #cccccc;
+#submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+#submit:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
-#forecast {
-  font-size: 18px;
-  margin-top: 20px;
+/* Weather results container - center everything */
+#weather {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.forecast-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+  justify-content: center; /* Center the forecast cards */
+  max-width: 100%;
+}
+
+/* When there are fewer cards, center them better */
+.forecast-container:has(.forecast-card:nth-child(-n+3)) {
+  justify-content: center;
+}
+
+.forecast-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  min-width: 200px;
+  flex-shrink: 0;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: start;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+
+.forecast-date {
+  font-size: 0.9rem;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.forecast-day {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.forecast-temp {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.forecast-conditions {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.forecast-humidity {
+  font-size: 0.8rem;
+  color: #888;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.error-message {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  color: #e74c3c;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.loading {
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-section {
+    padding: 1.5rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .input-group {
+    min-width: auto;
+    max-width: none;
+  }
+  
+  .radio-group, .select-group {
+    justify-content: center;
+  }
+  
+  .forecast-container {
+    gap: 0.5rem; /* Smaller gap on mobile for more space */
+  }
+  
+  .forecast-card {
+    min-width: 100px;
+    max-width: 140px;
+    padding: 1rem;
+  }
+  
+  .forecast-temp {
+    font-size: 1.8rem;
+  }
 }
